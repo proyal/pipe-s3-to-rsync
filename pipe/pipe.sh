@@ -5,6 +5,7 @@
 
 source "$(dirname "$0")/common.sh"
 source "$(dirname "$0")/set-restart-command.sh"
+source "$(dirname "$0")/setup-ssh-dir.sh"
 
 #
 # Required parameters
@@ -31,6 +32,7 @@ RESTART_COMMAND_TYPE=${RESTART_COMMAND_TYPE:=none}
 RESTART_COMMAND=${RESTART_COMMAND:=''}
 
 set_restart_command
+setup_ssh_dir
 
 #
 # Echo non-sensitive variables that are about to be used.

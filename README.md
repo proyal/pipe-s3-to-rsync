@@ -33,6 +33,7 @@ script:
 | REMOTE_ADDRESS (*)        | Address for remote machine (SSH/rsync). |
 | REMOTE_PATH (*)           | Target path on the remote machine (rsync). Could be absolute or relative to home directory. |
 | UNZIP_PATH                | Path to unzip downloaded file to. Default: `.dist` |
+| RSYNC_ARGS                | Additional rsync arguments. Default: `--exclude={node_modules,ecosystem.config.js}` |
 | RUN_DEPENDENCIES_COMMAND  | If false, will not run the dependency command. Default: `true` |
 | DEPENDENCIES_COMMAND      | Command to install dependencies on the remote machine. Will run from REMOTE_PATH. Default: `npm ci --production` |
 | RESTART_COMMAND_TYPE      | If set to `staging` or `production` will set RESTART_COMMAND to some preset commands. These will probably not be useful for most environments. Default: `none` |

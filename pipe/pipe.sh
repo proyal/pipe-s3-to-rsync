@@ -26,9 +26,10 @@ S3_FILENAME_REGEX=${S3_FILENAME_REGEX:='^[a-zA-Z0-9_/-]+\.zip$'}
 UNZIP_PATH=${UNZIP_PATH:='.dist'}
 SSH_TO=$REMOTE_USERNAME@$REMOTE_ADDRESS
 RSYNC_TARGET=$SSH_TO:$REMOTE_PATH
-RUN_DEPENDENCIES_COMMAND=${RUN_DEPENDENCIES_COMMAND:=true}
+RSYNC_ARGS=${RSYNC_ARGS:='--exclude={node_modules,ecosystem.config.js}'}
+RUN_DEPENDENCIES_COMMAND=${RUN_DEPENDENCIES_COMMAND:='true'}
 DEPENDENCIES_COMMAND=${DEPENDENCIES_COMMAND:='npm ci --production'}
-RESTART_COMMAND_TYPE=${RESTART_COMMAND_TYPE:=none}
+RESTART_COMMAND_TYPE=${RESTART_COMMAND_TYPE:='none'}
 RESTART_COMMAND=${RESTART_COMMAND:=''}
 
 set_restart_command
@@ -48,6 +49,7 @@ echo_var S3_FILENAME_REGEX
 echo_var UNZIP_PATH
 echo_var SSH_TO
 echo_var RSYNC_TARGET
+echo_var RSYNC_ARGS
 echo_var RUN_DEPENDENCIES_COMMAND
 echo_var DEPENDENCIES_COMMAND
 echo_var RESTART_COMMAND_TYPE
@@ -59,8 +61,8 @@ echo_var RESTART_COMMAND
 run rm -rf $UNZIP_PATH
 run aws s3 cp --region $AWS_REGION s3://$S3_BUCKET/$S3_FILENAME dist.zip
 run unzip dist.zip -d $UNZIP_PATH
-run rsync -avczhi --stats --delete --partial --exclude-from=rsync-exclude-from $UNZIP_PATH/ $SSH_TO:$REMOTE_PATH
-if [[ $RUN_DEPENDENCIES_COMMAND == true ]]; then
+run rsync -avczhi --stats --delete --partial $RSYNC_ARGS $UNZIP_PATH/ $SSH_TO:$REMOTE_PATH
+if [[ "$RUN_DEPENDENCIES_COMMAND" == "true" ]]; then
     run "ssh $SSH_TO \"cd $REMOTE_PATH && $DEPENDENCIES_COMMAND\""
 fi
 if [[ $RESTART_COMMAND ]]; then

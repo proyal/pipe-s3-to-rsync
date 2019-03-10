@@ -34,9 +34,9 @@ script:
 | REMOTE_PATH (*)           | Target path on the remote machine (rsync). Could be absolute or relative to home directory. |
 | UNZIP_PATH                | Path to unzip downloaded file to. Default: `.dist` |
 | RUN_DEPENDENCIES_COMMAND  | If false, will not run the dependency command. Default: `true` |
-| DEPENDENCIES_COMMAND      | Command to install dependencies on the remote machine. Will run from the home directory. Default: `npm ci --production` |
+| DEPENDENCIES_COMMAND      | Command to install dependencies on the remote machine. Will run from REMOTE_PATH. Default: `npm ci --production` |
 | RESTART_COMMAND_TYPE      | If set to `staging` or `production` will set RESTART_COMMAND to some preset commands. These will probably not be useful for most environments. Default: `none` |
-| RESTART_COMMAND           | Command to restart server on remote machine. Will run from the home directory. Default: Empty |
+| RESTART_COMMAND           | Command to restart server on remote machine. Will run from REMOTE_PATH. Default: Empty |
 | S3_FILENAME_REGEX         | Regex string to validate S3_FILENAME. Default: `^[a-zA-Z0-9_/-]+\.zip$` |
 
 _(*) = required variable._

@@ -8,7 +8,7 @@ set_restart_command() {
       staging)
         RESTART_COMMAND="pm2 restart ecosystem.config.js --update-env";;
       production)
-        RESTART_COMMAND="/usr/local/bin/restart-nodejs";;
+        RESTART_COMMAND="/usr/local/bin/restart-node --domain $REMOTE_USERNAME";;
      esac
   fi
 }

@@ -63,7 +63,7 @@ run aws s3 cp --region $AWS_REGION s3://$S3_BUCKET/$S3_FILENAME dist.zip
 run unzip dist.zip -d $UNZIP_PATH
 run rsync -avczhi --stats --delete --partial $RSYNC_ARGS $UNZIP_PATH/ $SSH_TO:$REMOTE_PATH
 if [[ "$RUN_DEPENDENCIES_COMMAND" == "true" ]]; then
-    run "ssh $SSH_TO \"cd $REMOTE_PATH && $DEPENDENCIES_COMMAND\""
+    run "ssh -A $SSH_TO \"cd $REMOTE_PATH && $DEPENDENCIES_COMMAND\""
 fi
 if [[ $RESTART_COMMAND ]]; then
     run "ssh $SSH_TO \"cd $REMOTE_PATH && $RESTART_COMMAND\""
